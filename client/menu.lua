@@ -35,7 +35,6 @@ local function OpenActionsMenu()
             if job == playerJob then
                 canOpenMenu = true
                 Debugger("MENU CRIMINAL ABIERTO PERFECTAMENTE")
-                -- Añadir las opciones del menú según interactions_menu
                 if data.interactions_menu.cuff then
                     table.insert(menuElements, { label = 'Esposar', value = 'cuff' })
                 end
@@ -73,13 +72,21 @@ local function OpenActionsMenu()
                 if action == 'cuff' then
                     -- Añade la funcionalidad de esposar
                 elseif action == 'bag_on_head' then
-                    -- Añade la funcionalidad de poner bolsa en la cabeza
+                    if Config.DataVars.onbag_use then 
+                        Notify("Tienes que esperar 5 segundos para volver a usar esto")
+                        return
+                    end
+                    Config.DataVars.onbag_use = true
+                    menu.close()
+                    PutHeadBagInPlayer()
                 elseif action == 'vehicle_info' then
                     -- Añade la funcionalidad de información del vehículo
                 elseif action == 'vehicle_steal' then
                     StealVehicle()
+                    menu.close()
                 elseif action == 'take_hostage' then
-                    -- Añade la funcionalidad de tomar de rehén
+                    TakeHostage()
+                    menu.close()
                 end
             end,
             function(data, menu)

@@ -20,7 +20,18 @@ server_scripts {
     "server/*.lua",
 }
 
+ui_page {
+    "dist/index.html"
+}
+
+files {
+	'dist/index.html',
+	'dist/styles/*.css',
+    'dist/javascript/*.js',
+    'dist/assets/*.png',
+}
+
 dependencies {
-    "ox_lib",
+    "ox_lib", 
     "lockpick", -- https://github.com/baguscodestudio/lockpick
 }
