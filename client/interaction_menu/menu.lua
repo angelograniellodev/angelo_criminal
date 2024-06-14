@@ -37,6 +37,10 @@ local function OpenActionsMenu()
                 Debugger("MENU CRIMINAL ABIERTO PERFECTAMENTE")
                 if data.interactions_menu.cuff then
                     table.insert(menuElements, { label = 'Esposar', value = 'cuff' })
+                    table.insert(menuElements, { label = 'LLevar Esposado', value = 'drag' })
+                end
+                if data.interactions_menu.search then
+                    table.insert(menuElements, { label = 'Cachear', value = 'search' })
                 end
                 if data.interactions_menu.bag_on_head then
                     table.insert(menuElements, { label = 'Bolsa en la cabeza', value = 'bag_on_head' })
@@ -70,7 +74,11 @@ local function OpenActionsMenu()
                 local action = data.current.value
 
                 if action == 'cuff' then
-                    -- Añade la funcionalidad de esposar
+                    CuffPlayer()
+                    menu.close()
+                elseif action == 'drag' then
+                    UnCuffPlayer()
+                    menu.close()
                 elseif action == 'bag_on_head' then
                     if Config.DataVars.onbag_use then 
                         Notify("Tienes que esperar 5 segundos para volver a usar esto")
@@ -79,13 +87,14 @@ local function OpenActionsMenu()
                     Config.DataVars.onbag_use = true
                     menu.close()
                     PutHeadBagInPlayer()
-                elseif action == 'vehicle_info' then
-                    -- Añade la funcionalidad de información del vehículo
                 elseif action == 'vehicle_steal' then
                     StealVehicle()
                     menu.close()
                 elseif action == 'take_hostage' then
                     TakeHostage()
+                    menu.close()
+                elseif action == 'search' then 
+                    SearchPlayerInventory()
                     menu.close()
                 end
             end,

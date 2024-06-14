@@ -149,6 +149,8 @@ Citizen.CreateThread(function()
 			if not IsEntityPlayingAnim(PlayerPedId(), takeHostage.hostage.animDict, takeHostage.hostage.anim, 3) then
 				TaskPlayAnim(PlayerPedId(), takeHostage.hostage.animDict, takeHostage.hostage.anim, 8.0, -8.0, 100000, takeHostage.hostage.flag, 0, false, false, false)
 			end
+		else
+			Wait(1200)
 		end
 		Wait(0)
 	end

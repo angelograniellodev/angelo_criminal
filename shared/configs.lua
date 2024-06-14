@@ -4,7 +4,7 @@ Config.Debug = true
 
 function Debugger(msg)
     if Config.Debug then 
-        print("[ANGELO CRIMINAL] ".. msg)
+        print("[^6Angelo Criminal^0] " .. msg)
     end
 end
 
@@ -19,8 +19,8 @@ Config.Criminals = {
         },
         interactions_menu = {
             cuff = true, --Esposas
+            search = true, --Cachear persona
             bag_on_head = true, --Bolsa en la cabeza
-            vehicle_info = true, --Info de la placa a nombre de quien esta
             vehicle_steal = true, --Quitar seguro de las puertas
             take_hostage = true, --Tomar de reheen (th)
         },
