@@ -29,5 +29,6 @@ Config.Criminals = {
 
 Config.DataVars = {
     prop_bag = nil,
+    prop_cuffs = nil,
     onbag_use = false,
 }
