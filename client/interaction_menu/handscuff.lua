@@ -1,9 +1,7 @@
-local isHandcuffed = false
-
-local function PlayerIsHandCuffed()
-    while isHandcuffed do
+local function ishandcuffed()
+    while Config.DataVars.ishandcuffed do
         Wait(1)
-        if isHandcuffed then
+        if Config.DataVars.ishandcuffed then
             DisableAllControlActions(0)
             EnableControlAction(0, 1, true)
             EnableControlAction(0, 2, true)
@@ -31,10 +29,9 @@ end
 
 RegisterNetEvent('angelo_criminal:handcuff')
 AddEventHandler('angelo_criminal:handcuff', function()
-    isHandcuffed = not isHandcuffed
     local playerPed = PlayerPedId()
 
-    if isHandcuffed then
+    if not Config.DataVars.ishandcuffed then
         RequestAnimDict('mp_arresting')
         while not HasAnimDictLoaded('mp_arresting') do
             Wait(100)
@@ -54,7 +51,8 @@ AddEventHandler('angelo_criminal:handcuff', function()
         DisablePlayerFiring(playerPed, true)
         SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
         SetPedCanPlayGestureAnims(playerPed, false)
-        PlayerIsHandCuffed()
+        Config.DataVars.ishandcuffed = true
+        ishandcuffed()
     else
         if Config.DataVars.prop_cuffs then
             DeleteEntity(Config.DataVars.prop_cuffs)
@@ -65,7 +63,7 @@ AddEventHandler('angelo_criminal:handcuff', function()
         SetEnableHandcuffs(playerPed, false)
         DisablePlayerFiring(playerPed, false)
         SetPedCanPlayGestureAnims(playerPed, true)
-        isHandcuffed = false
+        Config.DataVars.ishandcuffed = false
     end
 end)
 

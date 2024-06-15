@@ -31,4 +31,11 @@ Config.DataVars = {
     prop_bag = nil,
     prop_cuffs = nil,
     onbag_use = false,
+    on_cuff_use = false,
+    ishandcuffed = false,
+}
+
+Config.Items = {
+    item_bag_head = "bolsa",
+    item_bag_head_count = 1,
 }

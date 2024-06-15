@@ -7,7 +7,9 @@ function PutHeadBagInPlayer()
         Notify("No hay nadie cerca")
         return
     else 
-        ESX.TriggerServerCallback('angelo_criminal:check_item', function(hasItem)
+        if not Config.DataVars.on_cuff_use then 
+        Config.DataVars.on_cuff_use = true
+        ESX.TriggerServerCallback('angelo_criminal:check_item', function(cb)
 
             if not cb then 
                 Notify("No tienes una bolsa para colocar")
@@ -17,7 +19,12 @@ function PutHeadBagInPlayer()
                 Wait(5000)
                 Config.DataVars.onbag_use = false
             end
-            end, "water", 1)
+            end, Config.Items.item_bag_head, Config.Items.item_bag_head_count)
+        else
+            Config.DataVars.on_cuff_use = false
+            TriggerServerEvent('angelo_criminal:send_bag:sv', GetPlayerServerId(closestPlayer)) 
+            ESX.TriggerServerCallback('angelo_criminal:add_item', function() end, Config.Items.item_bag_head, Config.Items.item_bag_head_count)
+        end
     end
     Debugger("FUNCION DE BAG USADA")
 end
@@ -47,24 +54,24 @@ function TakeOffHeadBag()
     SendNUIMessage({
         type = "showimage",
     })
-    while true do 
+    while onbag and not Config.DataVars.ishandcuffed do
         Wait(1)
         ESX.ShowHelpNotification('INTENTAR QUITAR BOLSA', 'G')
         ESX.ShowHelpNotification('NO HACER NADA', 'H')
-        if IsControlJustPressed(0,47) then
-            local success = lib.skillCheck({'easy', 'easy', 'easy', 'medium', 'medium'}, {'w', 'a'})
-            if success then 
-            onbag = false
-            DeleteEntity(Config.DataVars.prop_bag)
-            SendNUIMessage({
-                type = "hideimage",
-            })
-            Notify("te quitaste la bolsa de la cabeza")
-        else 
-            Notify("No lograste quitarte la bolsa de la cabeza")
-            Debugger("fallaste")
-            end
-            break
+        if IsControlJustPressed(0, 47) then
+                local success = lib.skillCheck({ 'easy', 'easy', 'easy', 'medium', 'medium' }, { 'w', 'a' })
+                if success then
+                    onbag = false
+                    DeleteEntity(Config.DataVars.prop_bag)
+                    SendNUIMessage({
+                        type = "hideimage",
+                    })
+                    Notify("te quitaste la bolsa de la cabeza")
+                else
+                    Notify("No lograste quitarte la bolsa de la cabeza")
+                    Debugger("fallaste")
+                end
+                break
         end
         if IsControlJustPressed(0, 74) then
             Notify("Decidiste no hacer nada, gran eleccion")
